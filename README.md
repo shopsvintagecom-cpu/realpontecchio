@@ -27,3 +27,4 @@ Modifica **solo `dati.js`** (si può fare anche da browser su GitHub, tasto mati
 ## Dominio personalizzato (opzionale, ~10 €/anno)
 
 Compra un dominio (es. `realpontecchio.it`), poi in Settings → Pages → Custom domain inseriscilo e imposta i DNS come indicato da GitHub. L'HTTPS è automatico.
+

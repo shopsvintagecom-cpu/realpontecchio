@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Pontecchio Calcio — Pontecchio Polesine</title>
+  <meta name="description" content="Sito ufficiale dell'A.S.D. Real Pontecchio Calcio: calendario, risultati, rosa, sponsor e contatti del gruppo sportivo di Pontecchio Polesine.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=Archivo+Black&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <nav class="nav" aria-label="Principale">
+    <a class="nav-logo" href="#top">Real <span>Pontecchio</span> Calcio</a>
+    <button class="nav-toggle" aria-label="Apri menu" aria-expanded="false" onclick="toggleMenu(this)">☰</button>
+    <ul class="nav-links" id="menu">
+      <li><a href="#societa">Società</a></li>
+      <li><a href="#calendario">Calendario</a></li>
+      <li><a href="#rosa">Rosa</a></li>
+      <li><a href="#sponsor">Sponsor</a></li>
+      <li><a href="#contatti">Contatti</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Pontecchio Polesine · dal 2016</p>
+      <h1>Real Pontecchio<br><em>Calcio</em></h1>
+      <p class="lead" id="hero-motto"></p>
+
+      <div class="matchday" id="matchday" hidden>
+        <div class="matchday-top">
+          <span id="md-comp"></span>
+          <span id="md-label"></span>
+        </div>
+        <div class="matchday-body">
+          <div class="matchday-team casa" id="md-casa"></div>
+          <div class="matchday-vs" id="md-vs"></div>
+          <div class="matchday-team" id="md-ospite"></div>
+        </div>
+        <div class="matchday-info">
+          <span id="md-data"></span>
+          <span id="md-campo"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="societa">
+    <div class="container">
+      <div class="sec-head">
+        <p class="eyebrow">Chi siamo</p>
+        <h2>La società</h2>
+      </div>
+      <div class="societa-grid">
+        <div id="societa-testo"></div>
+        <ul class="fatti" id="societa-fatti"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="calendario">
+    <div class="container">
+      <div class="sec-head">
+        <p class="eyebrow">Stagione</p>
+        <h2>Calendario e risultati</h2>
+      </div>
+      <table class="tab-partite">
+        <thead>
+          <tr><th>Data</th><th>Partita</th><th>Risultato</th><th>Campo</th></tr>
+        </thead>
+        <tbody id="tab-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="rosa">
+    <div class="container">
+      <div class="sec-head">
+        <p class="eyebrow">I nostri giocatori</p>
+        <h2>La rosa</h2>
+      </div>
+      <div class="rosa-grid" id="rosa-grid"></div>
+    </div>
+  </section>
+
+  <section id="sponsor">
+    <div class="container">
+      <div class="sec-head">
+        <p class="eyebrow">Chi ci sostiene</p>
+        <h2>Sponsor</h2>
+      </div>
+      <div class="sponsor-grid" id="sponsor-grid"></div>
+      <p class="sponsor-nota">Vuoi sostenere il Real Pontecchio? Scrivici: c'è spazio anche per la tua attività.</p>
+    </div>
+  </section>
+
+  <section id="contatti">
+    <div class="container">
+      <div class="sec-head">
+        <p class="eyebrow">Vieni a trovarci</p>
+        <h2>Contatti</h2>
+      </div>
+      <div class="contatti-grid">
+        <div>
+          <h3>Dove giochiamo</h3>
+          <ul id="contatti-dove"></ul>
+        </div>
+        <div>
+          <h3>Seguici</h3>
+          <ul id="contatti-social"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span id="footer-nome"></span>
+    <span>Sito realizzato dalla società — nessun cookie, nessun tracciamento.</span>
+  </div>
+</footer>
+
+<script src="dati.js"></script>
+<script>
+function toggleMenu(btn) {
+  const menu = document.getElementById("menu");
+  const aperto = menu.classList.toggle("aperto");
+  btn.setAttribute("aria-expanded", aperto);
+}
+document.getElementById("menu").addEventListener("click", e => {
+  if (e.target.tagName === "A") {
+    document.getElementById("menu").classList.remove("aperto");
+  }
+});
+
+const fmtData = iso => new Date(iso + "T00:00:00").toLocaleDateString("it-IT",
+  { weekday: "short", day: "numeric", month: "long", year: "numeric" });
+
+// ---- Hero / motto
+document.getElementById("hero-motto").textContent = DATI.club.motto;
+document.getElementById("footer-nome").textContent =
+  "© " + new Date().getFullYear() + " " + DATI.club.nome;
+
+// ---- Prossima partita (prima senza risultato con data >= oggi)
+(function () {
+  const oggi = new Date(); oggi.setHours(0, 0, 0, 0);
+  const prossima = DATI.partite
+    .filter(p => p.golCasa === null && new Date(p.data + "T00:00:00") >= oggi)
+    .sort((a, b) => a.data.localeCompare(b.data))[0];
+  if (!prossima) return;
+  document.getElementById("matchday").hidden = false;
+  document.getElementById("md-comp").textContent = prossima.competizione;
+  document.getElementById("md-label").textContent = "Prossima partita";
+  document.getElementById("md-casa").textContent = prossima.casa;
+  document.getElementById("md-ospite").textContent = prossima.ospite;
+  document.getElementById("md-vs").textContent = prossima.ora || "VS";
+  document.getElementById("md-data").textContent = "📅 " + fmtData(prossima.data);
+  document.getElementById("md-campo").textContent = "📍 " + prossima.campo;
+})();
+
+// ---- Società
+document.getElementById("societa-testo").innerHTML =
+  DATI.club.descrizione.map(p => "<p>" + p + "</p>").join("");
+document.getElementById("societa-fatti").innerHTML =
+  DATI.club.fatti.map(f =>
+    "<li><strong>" + f.titolo + "</strong>" + f.testo + "</li>").join("");
+
+// ---- Calendario
+const evidenzia = nome => nome.toLowerCase().includes("pontecchio")
+  ? '<span class="noi">' + nome + "</span>" : nome;
+document.getElementById("tab-body").innerHTML =
+  DATI.partite
+    .slice()
+    .sort((a, b) => a.data.localeCompare(b.data))
+    .map(p => {
+      const ris = p.golCasa === null
+        ? '<span class="da-giocare">' + (p.ora || "—") + "</span>"
+        : p.golCasa + " – " + p.golOspite;
+      return "<tr><td>" + fmtData(p.data) + "</td>" +
+        "<td>" + evidenzia(p.casa) + " – " + evidenzia(p.ospite) + "</td>" +
+        '<td class="ris">' + ris + "</td>" +
+        "<td>" + p.campo + "</td></tr>";
+    }).join("");
+
+// ---- Rosa
+document.getElementById("rosa-grid").innerHTML =
+  DATI.rosa.map(g =>
+    '<div class="giocatore"><div class="num">' + g.numero + "</div>" +
+    '<div><div class="nome">' + g.nome + '</div><div class="ruolo">' + g.ruolo + "</div></div></div>"
+  ).join("");
+
+// ---- Sponsor
+document.getElementById("sponsor-grid").innerHTML =
+  DATI.sponsor.map(s => s.url
+    ? '<a class="sponsor-card" href="' + s.url + '" target="_blank" rel="noopener">' + s.nome + "</a>"
+    : '<span class="sponsor-card">' + s.nome + "</span>"
+  ).join("");
+
+// ---- Contatti
+const c = DATI.contatti;
+document.getElementById("contatti-dove").innerHTML =
+  "<li>" + c.indirizzo + "</li>" +
+  (c.email ? '<li><a href="mailto:' + c.email + '">' + c.email + "</a></li>" : "") +
+  (c.telefono ? "<li>Tel. " + c.telefono + "</li>" : "");
+document.getElementById("contatti-social").innerHTML =
+  (c.facebook ? '<li><a href="' + c.facebook + '" target="_blank" rel="noopener">Facebook</a></li>' : "") +
+  (c.instagram ? '<li><a href="' + c.instagram + '" target="_blank" rel="noopener">Instagram</a></li>' : "");
+</script>
+</body>
+</html>

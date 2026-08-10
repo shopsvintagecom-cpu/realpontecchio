@@ -1,0 +1,239 @@
+/* ============================================================
+   Real Pontecchio Calcio — style.css
+   Colori sociali: cambia le variabili qui sotto e tutto il sito
+   si adegua (es. se i colori del club sono altri).
+   ============================================================ */
+:root {
+  --blu: #16276b;        /* colore principale */
+  --blu-scuro: #0d1637;  /* fondo hero e footer */
+  --oro: #c9a227;        /* accento (badge, linee) */
+  --ghiaccio: #f4f6fb;   /* fondo sezioni alternate */
+  --inchiostro: #14161f; /* testo */
+  --bianco: #ffffff;
+
+  --font-display: "Archivo Black", "Arial Black", sans-serif;
+  --font-testo: "Archivo", "Segoe UI", sans-serif;
+  --max-w: 1080px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
+}
+
+body {
+  font-family: var(--font-testo);
+  color: var(--inchiostro);
+  background: var(--bianco);
+  line-height: 1.6;
+}
+
+img { max-width: 100%; display: block; }
+a { color: var(--blu); }
+
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 20px; }
+
+/* ---------- Header ---------- */
+header {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--blu-scuro);
+  border-bottom: 3px solid var(--oro);
+}
+.nav {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: var(--max-w); margin: 0 auto; padding: 12px 20px;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  color: var(--bianco); text-decoration: none;
+  font-size: 1.05rem; letter-spacing: .04em; text-transform: uppercase;
+}
+.nav-logo span { color: var(--oro); }
+.nav-links { display: flex; gap: 22px; list-style: none; }
+.nav-links a {
+  color: #c6cdea; text-decoration: none; font-size: .92rem;
+  font-weight: 600; text-transform: uppercase; letter-spacing: .05em;
+}
+.nav-links a:hover, .nav-links a:focus-visible { color: var(--bianco); }
+a:focus-visible, button:focus-visible {
+  outline: 3px solid var(--oro); outline-offset: 2px;
+}
+.nav-toggle {
+  display: none; background: none; border: 0; color: var(--bianco);
+  font-size: 1.6rem; cursor: pointer;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  background: var(--blu-scuro);
+  color: var(--bianco);
+  position: relative; overflow: hidden;
+  padding: 72px 20px 88px;
+}
+/* cerchio di centrocampo, linea gessata */
+.hero::before {
+  content: ""; position: absolute; inset: auto -140px -260px auto;
+  width: 560px; height: 560px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.14);
+}
+.hero::after {
+  content: ""; position: absolute; top: 0; bottom: 0; right: 138px;
+  width: 2px; background: rgba(255,255,255,.14);
+}
+.hero-inner { max-width: var(--max-w); margin: 0 auto; position: relative; }
+.hero-eyebrow {
+  color: var(--oro); font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; font-size: .8rem;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  line-height: .98; text-transform: uppercase;
+  margin: 12px 0 18px;
+}
+.hero h1 em { font-style: normal; color: var(--oro); }
+.hero p.lead { max-width: 34rem; color: #d4daf1; font-size: 1.05rem; }
+
+/* ---------- Scoreboard prossima partita ---------- */
+.matchday {
+  margin-top: 40px; background: var(--bianco); color: var(--inchiostro);
+  border-radius: 10px; overflow: hidden; max-width: 640px;
+  box-shadow: 0 12px 32px rgba(0,0,0,.35);
+}
+.matchday-top {
+  background: var(--oro); color: var(--blu-scuro);
+  font-weight: 800; text-transform: uppercase; letter-spacing: .12em;
+  font-size: .78rem; padding: 8px 18px;
+  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+}
+.matchday-body {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: center; gap: 10px; padding: 22px 18px;
+}
+.matchday-team {
+  font-family: var(--font-display); text-transform: uppercase;
+  font-size: clamp(1rem, 2.6vw, 1.35rem); line-height: 1.15;
+}
+.matchday-team.casa { text-align: right; }
+.matchday-vs {
+  font-family: var(--font-display); color: var(--blu);
+  font-size: 1.1rem; padding: 6px 14px;
+  border: 2px solid var(--blu); border-radius: 6px;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.matchday-info {
+  border-top: 1px solid #e4e7f0; padding: 10px 18px;
+  font-size: .9rem; color: #4a4f63;
+  display: flex; gap: 18px; flex-wrap: wrap;
+}
+
+/* ---------- Sezioni ---------- */
+section { padding: 72px 0; }
+section:nth-of-type(even) { background: var(--ghiaccio); }
+.sec-head { margin-bottom: 34px; }
+.sec-head .eyebrow {
+  color: var(--oro); font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; font-size: .78rem;
+}
+.sec-head h2 {
+  font-family: var(--font-display); text-transform: uppercase;
+  font-size: clamp(1.6rem, 4vw, 2.3rem); color: var(--blu-scuro);
+  line-height: 1.05; margin-top: 6px;
+}
+
+/* ---------- Società ---------- */
+.societa-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 44px; }
+.societa-grid p + p { margin-top: 14px; }
+.fatti { list-style: none; display: grid; gap: 14px; align-content: start; }
+.fatti li {
+  background: var(--bianco); border-left: 4px solid var(--oro);
+  padding: 14px 16px; border-radius: 0 8px 8px 0;
+  box-shadow: 0 2px 10px rgba(20,22,31,.06);
+}
+.fatti strong { display: block; color: var(--blu-scuro); }
+
+/* ---------- Calendario ---------- */
+.tab-partite { width: 100%; border-collapse: collapse; background: var(--bianco);
+  border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(20,22,31,.07); }
+.tab-partite th, .tab-partite td { padding: 12px 14px; text-align: left; }
+.tab-partite th {
+  background: var(--blu-scuro); color: var(--bianco);
+  text-transform: uppercase; font-size: .75rem; letter-spacing: .1em;
+}
+.tab-partite tr + tr td { border-top: 1px solid #eceef5; }
+.tab-partite .ris {
+  font-family: var(--font-display); font-variant-numeric: tabular-nums;
+  color: var(--blu); white-space: nowrap;
+}
+.tab-partite .da-giocare { color: #8a8fa3; font-family: var(--font-testo); font-weight: 700; }
+.tab-partite .noi { font-weight: 800; }
+
+/* ---------- Rosa ---------- */
+.rosa-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 14px;
+}
+.giocatore {
+  background: var(--bianco); border-radius: 10px; padding: 14px 16px;
+  display: flex; align-items: center; gap: 14px;
+  box-shadow: 0 2px 10px rgba(20,22,31,.06);
+}
+.giocatore .num {
+  font-family: var(--font-display); font-size: 1.4rem; color: var(--bianco);
+  background: var(--blu); border-radius: 8px; min-width: 46px; height: 46px;
+  display: grid; place-items: center; font-variant-numeric: tabular-nums;
+}
+.giocatore .nome { font-weight: 800; color: var(--blu-scuro); line-height: 1.2; }
+.giocatore .ruolo { font-size: .82rem; color: #6a6f84; text-transform: uppercase; letter-spacing: .06em; }
+
+/* ---------- Sponsor ---------- */
+.sponsor-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+.sponsor-card {
+  background: var(--bianco); border: 1px solid #e4e7f0; border-radius: 10px;
+  padding: 26px 16px; text-align: center; font-weight: 800;
+  color: var(--blu-scuro); text-decoration: none;
+  transition: border-color .15s, transform .15s;
+}
+.sponsor-card:hover { border-color: var(--oro); transform: translateY(-2px); }
+.sponsor-nota { margin-top: 20px; font-size: .9rem; color: #6a6f84; }
+
+/* ---------- Contatti ---------- */
+.contatti-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
+.contatti-grid h3 {
+  font-family: var(--font-display); text-transform: uppercase;
+  color: var(--blu-scuro); margin-bottom: 10px; font-size: 1.05rem;
+}
+.contatti-grid ul { list-style: none; display: grid; gap: 8px; }
+
+/* ---------- Footer ---------- */
+footer {
+  background: var(--blu-scuro); color: #aab2d6;
+  padding: 28px 20px; font-size: .85rem;
+}
+.footer-inner {
+  max-width: var(--max-w); margin: 0 auto;
+  display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+}
+footer a { color: var(--bianco); }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 760px) {
+  .nav-toggle { display: block; }
+  .nav-links {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; gap: 0; background: var(--blu-scuro);
+    border-bottom: 3px solid var(--oro);
+  }
+  .nav-links.aperto { display: flex; }
+  .nav-links a { display: block; padding: 14px 20px; }
+  .societa-grid, .contatti-grid { grid-template-columns: 1fr; }
+  .hero { padding: 56px 20px 64px; }
+  .hero::after { display: none; }
+  .tab-partite th:nth-child(4), .tab-partite td:nth-child(4) { display: none; }
+}

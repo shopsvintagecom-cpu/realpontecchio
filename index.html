@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Real Pontecchio Calcio — Pontecchio Polesine</title>
-  <meta name="description" content="Sito ufficiale dell'A.S.D. Real Pontecchio Calcio: calendario, risultati, rosa, sponsor e contatti del gruppo sportivo di Pontecchio Polesine.">
+  <title>Real Pontecchio Calcio — Una squadra, un paese, una passione</title>
+  <meta name="description" content="Sito ufficiale del G.S.D. Real Pontecchio Calcio: calendario, risultati, rosa, video, sponsor e contatti del gruppo sportivo di Pontecchio Polesine.">
+  <link rel="icon" href="logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=Archivo+Black&display=swap" rel="stylesheet">
@@ -14,12 +15,16 @@
 
 <header>
   <nav class="nav" aria-label="Principale">
-    <a class="nav-logo" href="#top">Real <span>Pontecchio</span> Calcio</a>
+    <a class="nav-brand" href="#top">
+      <img src="logo.png" alt="" onerror="this.style.display='none'">
+      <span class="nav-logo">Real Pontecchio<span>Calcio</span></span>
+    </a>
     <button class="nav-toggle" aria-label="Apri menu" aria-expanded="false" onclick="toggleMenu(this)">☰</button>
     <ul class="nav-links" id="menu">
       <li><a href="#societa">Società</a></li>
       <li><a href="#calendario">Calendario</a></li>
       <li><a href="#rosa">Rosa</a></li>
+      <li><a href="#video">Video</a></li>
       <li><a href="#sponsor">Sponsor</a></li>
       <li><a href="#contatti">Contatti</a></li>
     </ul>
@@ -30,9 +35,10 @@
 
   <div class="hero">
     <div class="hero-inner">
+      <img class="hero-stemma" src="logo.png" alt="Stemma del Real Pontecchio Calcio" onerror="this.style.display='none'">
       <p class="hero-eyebrow">Pontecchio Polesine · dal 2016</p>
-      <h1>Real Pontecchio<br><em>Calcio</em></h1>
-      <p class="lead" id="hero-motto"></p>
+      <h1>Una squadra<span class="virgola">,</span> un paese<span class="virgola">,</span> una passione</h1>
+      <p class="lead">Il gruppo sportivo di Pontecchio Polesine: giovanili, prima squadra e tutto quello che succede attorno al campo.</p>
 
       <div class="matchday" id="matchday" hidden>
         <div class="matchday-top">
@@ -90,6 +96,20 @@
     </div>
   </section>
 
+  <section id="video">
+    <div class="container">
+      <div class="sec-head">
+        <p class="eyebrow">Dal campo</p>
+        <h2>Video e highlights</h2>
+      </div>
+      <div class="video-wrap" id="video-wrap"></div>
+      <div class="video-cta">
+        <a class="btn-yt" id="btn-yt" href="#" target="_blank" rel="noopener">Guarda il canale YouTube</a>
+        <span class="video-nota">Gol, sintesi delle partite e momenti di spogliatoio.</span>
+      </div>
+    </div>
+  </section>
+
   <section id="sponsor">
     <div class="container">
       <div class="sec-head">
@@ -123,9 +143,10 @@
 </main>
 
 <footer>
+  <div class="footer-strisce"></div>
   <div class="footer-inner">
     <span id="footer-nome"></span>
-    <span>Sito realizzato dalla società — nessun cookie, nessun tracciamento.</span>
+    <span>Nessun cookie, nessun tracciamento.</span>
   </div>
 </footer>
 
@@ -145,8 +166,6 @@ document.getElementById("menu").addEventListener("click", e => {
 const fmtData = iso => new Date(iso + "T00:00:00").toLocaleDateString("it-IT",
   { weekday: "short", day: "numeric", month: "long", year: "numeric" });
 
-// ---- Hero / motto
-document.getElementById("hero-motto").textContent = DATI.club.motto;
 document.getElementById("footer-nome").textContent =
   "© " + new Date().getFullYear() + " " + DATI.club.nome;
 
@@ -198,6 +217,18 @@ document.getElementById("rosa-grid").innerHTML =
     '<div><div class="nome">' + g.nome + '</div><div class="ruolo">' + g.ruolo + "</div></div></div>"
   ).join("");
 
+// ---- Video: ultimi caricamenti del canale
+(function () {
+  const yt = DATI.youtube || {};
+  document.getElementById("btn-yt").href = yt.canale || "#";
+  if (!yt.playlistCaricamenti) return;
+  document.getElementById("video-wrap").innerHTML =
+    '<iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=' +
+    yt.playlistCaricamenti + '" title="Video del Real Pontecchio Calcio" ' +
+    'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ' +
+    'allowfullscreen loading="lazy"></iframe>';
+})();
+
 // ---- Sponsor
 document.getElementById("sponsor-grid").innerHTML =
   DATI.sponsor.map(s => s.url
@@ -213,7 +244,8 @@ document.getElementById("contatti-dove").innerHTML =
   (c.telefono ? "<li>Tel. " + c.telefono + "</li>" : "");
 document.getElementById("contatti-social").innerHTML =
   (c.facebook ? '<li><a href="' + c.facebook + '" target="_blank" rel="noopener">Facebook</a></li>' : "") +
-  (c.instagram ? '<li><a href="' + c.instagram + '" target="_blank" rel="noopener">Instagram</a></li>' : "");
+  (c.instagram ? '<li><a href="' + c.instagram + '" target="_blank" rel="noopener">Instagram</a></li>' : "") +
+  (c.youtube ? '<li><a href="' + c.youtube + '" target="_blank" rel="noopener">YouTube</a></li>' : "");
 </script>
 </body>
 </html>

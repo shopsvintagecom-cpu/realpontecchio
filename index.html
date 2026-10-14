@@ -1281,11 +1281,20 @@
   });
 
 
+  // ---- Foto staff: se la cartella è finita in staff/staff/ le cerca anche lì ----
+  function percorsoAlternativo(src) { return src.includes("/staff/staff/") ? null : src.replace("/staff/", "/staff/staff/"); }
+  document.querySelectorAll("img.foto").forEach(img => {
+    const prova = () => { const alt = percorsoAlternativo(img.src); if (alt) img.src = alt; };
+    img.addEventListener("error", prova, { once: true });
+    if (img.complete && !img.naturalWidth) prova();
+  });
+
   // ---- Locandine staff ----
   (function () {
     const box = document.getElementById("locandina"), img = box.querySelector("img");
     const chiudi = () => box.classList.remove("aperta");
     document.querySelectorAll("[data-locandina]").forEach(c => c.addEventListener("click", () => {
+      img.onerror = () => { img.onerror = null; const alt = percorsoAlternativo(img.src); if (alt) img.src = alt; };
       img.src = c.dataset.locandina; img.alt = c.getAttribute("aria-label"); box.classList.add("aperta"); box.querySelector("button").focus();
     }));
     box.addEventListener("click", e => { if (e.target !== img) chiudi(); });

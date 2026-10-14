@@ -445,6 +445,27 @@
     .nastro span{animation:none}
   }
 
+
+  /* Staff con foto */
+  .staff{grid-template-columns:repeat(3,1fr)}
+  button.card-p{font:inherit;color:inherit;border:0;padding:0;text-align:left;cursor:pointer;width:100%}
+  .card-p .foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 15%;transition:transform .5s ease}
+  .card-p:hover .foto{transform:scale(1.05)}
+  .card-p .info{z-index:1}
+  .card-p .luce{z-index:2}
+  .card-p .squadra-tag{display:inline-block;background:#fff;color:var(--granata-scuro);font-family:var(--display);font-weight:900;font-size:1rem;text-transform:uppercase;letter-spacing:.04em;padding:3px 10px;margin-bottom:8px}
+  .card-p .nome{font-size:2.2rem}
+  .card-p .ruolo{margin-top:4px}
+  .card-p .badge{position:absolute;z-index:1;top:14px;left:14px;background:var(--granata);color:#fff;font-family:var(--display);font-weight:700;font-size:.95rem;text-transform:uppercase;letter-spacing:.06em;padding:4px 10px;border:2px solid #fff}
+  .card-p .badge.nuovo{background:#fff;color:var(--granata-scuro)}
+  .locandina{position:fixed;inset:0;z-index:90;background:rgba(20,4,6,.92);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s}
+  .locandina.aperta{opacity:1;pointer-events:auto}
+  .locandina img{max-width:min(520px,100%);max-height:88vh;box-shadow:0 30px 80px rgba(0,0,0,.6);transform:scale(.94);transition:transform .3s}
+  .locandina.aperta img{transform:none}
+  .locandina button{position:absolute;top:14px;right:14px;width:48px;height:48px;border-radius:50%;border:2px solid #fff;background:transparent;color:#fff;font-size:1.6rem;cursor:pointer}
+  @media (max-width:1000px){.staff{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:560px){.card-p .nome{font-size:1.45rem}.card-p .squadra-tag{font-size:.8rem}.card-p .badge{font-size:.75rem;top:8px;left:8px}}
+
   /* ---------- Responsive ---------- */
   @media (max-width:1000px){
     .staff{grid-template-columns:repeat(2,1fr)}
@@ -624,13 +645,44 @@
 
 <section class="blocco scuro" id="staff">
   <div class="wrap">
-    <div class="titolo"><h2>Staff tecnico</h2><p>Le persone che ogni settimana preparano allenamenti e partite.</p></div>
+    <div class="titolo"><h2>Staff tecnico</h2><p>Gli allenatori della stagione 2026/27. Tocca una scheda per vedere la locandina.</p></div>
     <div class="staff">
-      <!-- Sostituisci "Nome Cognome". Per una foto: <img class="foto" src="..."> -->
-      <div class="card-p"><div class="luce"></div><svg class="sil" viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="7" r="5"/><path d="M2 24c0-6 4.5-10 10-10s10 4 10 10z"/></svg><div class="info"><div class="ruolo">Allenatore</div><div class="nome">Nome Cognome</div></div></div>
-      <div class="card-p"><div class="luce"></div><svg class="sil" viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="7" r="5"/><path d="M2 24c0-6 4.5-10 10-10s10 4 10 10z"/></svg><div class="info"><div class="ruolo">Vice allenatore</div><div class="nome">Nome Cognome</div></div></div>
-      <div class="card-p"><div class="luce"></div><svg class="sil" viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="7" r="5"/><path d="M2 24c0-6 4.5-10 10-10s10 4 10 10z"/></svg><div class="info"><div class="ruolo">Preparatore portieri</div><div class="nome">Nome Cognome</div></div></div>
-      <div class="card-p"><div class="luce"></div><svg class="sil" viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="7" r="5"/><path d="M2 24c0-6 4.5-10 10-10s10 4 10 10z"/></svg><div class="info"><div class="ruolo">Dirigente accompagnatore</div><div class="nome">Nome Cognome</div></div></div>
+      <button type="button" class="card-p" data-locandina="staff/locandina-allievi.jpg" aria-label="Roberto Ruzza, Mister Allievi: apri la locandina">
+        <div class="luce"></div>
+        <img class="foto" src="staff/ruzza.jpg" alt="" loading="lazy">
+        
+        <div class="info"><div class="squadra-tag">Allievi</div><div class="nome">Roberto<br>Ruzza</div><div class="ruolo">Mister</div></div>
+      </button>
+      <button type="button" class="card-p" data-locandina="staff/locandina-allievi.jpg" aria-label="Davide Angeloni, Vice mister Allievi: apri la locandina">
+        <div class="luce"></div>
+        <img class="foto" src="staff/angeloni.jpg" alt="" loading="lazy">
+        
+        <div class="info"><div class="squadra-tag">Allievi</div><div class="nome">Davide<br>Angeloni</div><div class="ruolo">Vice mister</div></div>
+      </button>
+      <button type="button" class="card-p" data-locandina="staff/locandina-gargiuolo.jpg" aria-label="Vincenzo Gargiuolo, Mister Under 15: apri la locandina">
+        <div class="luce"></div>
+        <img class="foto" src="staff/gargiuolo.jpg" alt="" loading="lazy">
+        <span class="badge nuovo">New entry</span>
+        <div class="info"><div class="squadra-tag">Under 15</div><div class="nome">Vincenzo<br>Gargiuolo</div><div class="ruolo">Mister</div></div>
+      </button>
+      <button type="button" class="card-p" data-locandina="staff/locandina-baroni.jpg" aria-label="Max Baroni, Mister Pulcini 1° anno: apri la locandina">
+        <div class="luce"></div>
+        <img class="foto" src="staff/baroni.jpg" alt="" loading="lazy">
+        <span class="badge">Confermato</span>
+        <div class="info"><div class="squadra-tag">Pulcini 1° anno</div><div class="nome">Max<br>Baroni</div><div class="ruolo">Mister</div></div>
+      </button>
+      <button type="button" class="card-p" data-locandina="staff/locandina-crepaldi.jpg" aria-label="Mattia Crepaldi, Mister Primi Calci: apri la locandina">
+        <div class="luce"></div>
+        <img class="foto" src="staff/crepaldi.jpg" alt="" loading="lazy">
+        <span class="badge">Confermato</span>
+        <div class="info"><div class="squadra-tag">Primi Calci</div><div class="nome">Mattia<br>Crepaldi</div><div class="ruolo">Mister</div></div>
+      </button>
+      <button type="button" class="card-p" data-locandina="staff/locandina-destro.jpg" aria-label="Paolo Destro, Preparatore portieri Tutte le squadre: apri la locandina">
+        <div class="luce"></div>
+        <img class="foto" src="staff/destro.jpg" alt="" loading="lazy">
+        <span class="badge">Confermato</span>
+        <div class="info"><div class="squadra-tag">Tutte le squadre</div><div class="nome">Paolo<br>Destro</div><div class="ruolo">Preparatore portieri</div></div>
+      </button>
     </div>
   </div>
 </section>
@@ -794,6 +846,8 @@
   <p id="cookie-t"><strong>Contenuti esterni.</strong> Classifiche, video e mappe arrivano da Tuttocampo, YouTube e Google Maps, che usano cookie propri. Li carichiamo solo se accetti. <a href="privacy.html">Privacy</a></p>
   <div><button type="button" class="btn btn-pieno" id="cookie-si">Accetta</button><button type="button" class="btn btn-vuoto" id="cookie-no">Solo necessari</button></div>
 </div>
+
+<div class="locandina" id="locandina" role="dialog" aria-modal="true" aria-label="Locandina"><img alt=""><button type="button" aria-label="Chiudi">×</button></div>
 
 <a class="wa-float" data-wa-link target="_blank" rel="noopener" aria-label="Segui il canale WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.1-1.2l-.4-.2z"/></svg>
@@ -999,7 +1053,7 @@
   document.querySelectorAll(".titolo").forEach(t => io.observe(t));
   const cant = document.getElementById("cantiere");
   if (cant) { if (ridotto) cant.classList.add("vis"); else io.observe(cant); }
-  document.querySelectorAll(".card-p").forEach((c, i) => { c.style.transitionDelay = (i % 4) * 0.12 + "s"; io.observe(c); });
+  document.querySelectorAll(".card-p").forEach((c, i) => { c.style.transitionDelay = (i % 3) * 0.12 + "s"; io.observe(c); });
 
 
   // ---- Calendario partite con conto alla rovescia ----
@@ -1050,9 +1104,11 @@
   function disegnaCalendario() {
     const sq = CONFIG.squadre[squadraAttiva];
     const lista = partiteSquadra(sq.nome);
-    primaHero = lista[0] || null;
+    // timer grande: la prossima della squadra scelta, altrimenti la prossima di qualsiasi squadra
+    const tutte = PARTITE.filter(p => p.quando - Date.now() > -fineGara);
+    primaHero = lista[0] || tutte[0] || null;
     if (primaHero) {
-      document.getElementById("cd-match").innerHTML = "<strong>" + esc(primaHero.casa) + " – " + esc(primaHero.ospite) + "</strong> · " +
+      document.getElementById("cd-match").innerHTML = (primaHero.squadra && CONFIG.squadre.length > 1 ? esc(primaHero.squadra) + " · " : "") + "<strong>" + esc(primaHero.casa) + " – " + esc(primaHero.ospite) + "</strong> · " +
         giornoOra(primaHero.quando) + (primaHero.campo ? " · " + esc(primaHero.campo) : "");
     }
     const cont = document.getElementById("calendario-lista");
@@ -1223,6 +1279,18 @@
       el.classList.add("ok");
     } catch (e) {}
   });
+
+
+  // ---- Locandine staff ----
+  (function () {
+    const box = document.getElementById("locandina"), img = box.querySelector("img");
+    const chiudi = () => box.classList.remove("aperta");
+    document.querySelectorAll("[data-locandina]").forEach(c => c.addEventListener("click", () => {
+      img.src = c.dataset.locandina; img.alt = c.getAttribute("aria-label"); box.classList.add("aperta"); box.querySelector("button").focus();
+    }));
+    box.addEventListener("click", e => { if (e.target !== img) chiudi(); });
+    addEventListener("keydown", e => { if (e.key === "Escape") chiudi(); });
+  })();
 
   // ---- App installabile ----
   if ("serviceWorker" in navigator && location.protocol === "https:") {
